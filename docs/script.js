@@ -1,5 +1,5 @@
 async function fetchRepos(topic) {
-    const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:your-organization`);
+    const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:Belux Open-Source Clinic`);
     const data = await response.json();
     return data.items;
 }
