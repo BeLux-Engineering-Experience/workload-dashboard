@@ -1,7 +1,15 @@
 async function fetchRepos(topic) {
-    const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:BeLux Open-Source Clinic`);
-    const data = await response.json();
-    return data.items;
+    try {
+        const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:BeLux Open-Source Clinic`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch repositories for topic: ${topic}`);
+        }
+        const data = await response.json();
+        return data.items;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
 async function displayRepos() {
@@ -19,11 +27,17 @@ async function displayRepos() {
         reposContainer.appendChild(topicHeader);
 
         const repoList = document.createElement('ul');
-        repos.forEach(repo => {
-            const repoItem = document.createElement('li');
-            repoItem.innerHTML = `<a href="${repo.html_url}">${repo.name}</a>`;
-            repoList.appendChild(repoItem);
-        });
+        if (repos.length === 0) {
+            const noReposItem = document.createElement('li');
+            noReposItem.textContent = 'No repositories found.';
+            repoList.appendChild(noReposItem);
+        } else {
+            repos.forEach(repo => {
+                const repoItem = document.createElement('li');
+                repoItem.innerHTML = `<a href="${repo.html_url}">${repo.name}</a>`;
+                repoList.appendChild(repoItem);
+            });
+        }
         reposContainer.appendChild(repoList);
     }
 
