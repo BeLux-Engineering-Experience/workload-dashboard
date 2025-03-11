@@ -1,6 +1,6 @@
 async function fetchRepos(topic) {
     try {
-        const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:BeLux-Open-Source-Clinic`);
+        const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:BeLux Open-Source Clinic`);
         if (!response.ok) {
             throw new Error(`Failed to fetch repositories for topic: ${topic}`);
         }
