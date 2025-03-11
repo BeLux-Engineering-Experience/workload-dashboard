@@ -27,12 +27,6 @@ async function displayRepos() {
         topicHeader.textContent = `Repositories for topic: ${topic}`;
         reposContainer.appendChild(topicHeader);
 
-        const topicLink = document.createElement('a');
-        topicLink.href = `https://github.com/search?q=topic:${topic}+org:BeLux-Open-Source-Clinic`;
-        topicLink.textContent = `View more ${topic} repositories on GitHub`;
-        topicLink.target = '_blank';
-        reposContainer.appendChild(topicLink);
-
         const repoList = document.createElement('ul');
         if (repos.length === 0) {
             const noReposItem = document.createElement('li');
