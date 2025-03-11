@@ -24,7 +24,7 @@ async function displayRepos() {
     for (const topic of topics) {
         const repos = await fetchRepos(topic);
         const topicHeader = document.createElement('h2');
-        topicHeader.textContent = `Repositories for topic: ${topic}`;
+        topicHeader.textContent = `${topic} repositories`;
         reposContainer.appendChild(topicHeader);
 
         const repoList = document.createElement('ul');
