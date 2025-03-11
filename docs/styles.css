@@ -7,17 +7,17 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #2756cb;
 }
 
 h2 {
-    color: #555;
+    color: #0a0a0a;
 }
 
 #repos {
     max-width: 800px;
     margin: 0 auto;
-    background: #5182cc;
+    background: #97a2b2;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
