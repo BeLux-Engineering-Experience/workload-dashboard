@@ -38,13 +38,32 @@ h2 {
     color: #0a0a0a;
 }
 
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
 #repos {
     max-width: 800px;
-    margin: 0 auto;
     background: #97a2b2;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    flex: 1;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+    margin-left: 0px;
+    flex: 0 0 400px;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
 }
 
 ul {
@@ -70,14 +89,9 @@ a:hover {
     font-size: 1.2em;
     color: #777;
 }
-
-.chart-container {
-    max-width: 400px;
-    margin: 20px auto;
-}
  */
 
- body {
+body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -123,7 +137,7 @@ h2 {
 }
 
 #repos {
-    max-width: 800px;
+    max-width: 600px; /* Adjust this value to make more space for the chart */
     background: #97a2b2;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -135,8 +149,9 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     max-width: 400px;
-    margin-left: 0px;
+    margin-left: 20px; /* Adjust this value if needed */
     flex: 0 0 400px;
 }
 
