@@ -7,6 +7,10 @@ async function fetchRepos(topic) {
 async function displayRepos() {
     const topics = ['infra', 'data', 'ai', 'app-innovation'];
     const reposContainer = document.getElementById('repos');
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.className = 'loading';
+    loadingIndicator.textContent = 'Loading repositories...';
+    reposContainer.appendChild(loadingIndicator);
 
     for (const topic of topics) {
         const repos = await fetchRepos(topic);
@@ -22,6 +26,10 @@ async function displayRepos() {
         });
         reposContainer.appendChild(repoList);
     }
+
+    reposContainer.removeChild(loadingIndicator);
 }
 
-displayRepos();
+document.addEventListener('DOMContentLoaded', () => {
+    displayRepos();
+});
