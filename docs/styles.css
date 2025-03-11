@@ -20,6 +20,13 @@ h2 {
     background: #97a2b2;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+#logo {
+    display: block;
+    margin: 20px auto;
+    opacity: 0.4; /* 40% transparency */
 }
 
 ul {
