@@ -23,12 +23,6 @@ h2 {
     position: relative;
 }
 
-#logo {
-    display: block;
-    margin: 20px auto;
-    opacity: 0.4; /* 40% transparency */
-}
-
 ul {
     list-style-type: none;
     padding: 0;
