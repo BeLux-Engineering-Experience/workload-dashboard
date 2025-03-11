@@ -155,7 +155,7 @@ async function displayRepos(topic = 'all') {
 
 function updateChart(topicCounts) {
     const ctx = document.getElementById('topicChart').getContext('2d');
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Infra', 'Data', 'AI', 'App Innovation'],
@@ -166,8 +166,30 @@ function updateChart(topicCounts) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
-        }
+            maintainAspectRatio: false,
+            plugins: {
+                datalabels: {
+                    formatter: (value, ctx) => {
+                        let sum = 0;
+                        let dataArr = ctx.chart.data.datasets[0].data;
+                        dataArr.map(data => {
+                            sum += data;
+                        });
+                        let percentage = (value * 100 / sum).toFixed(2) + "%";
+                        return percentage;
+                    },
+                    color: '#fff',
+                }
+            },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const chartElement = elements[0];
+                    const topic = chart.data.labels[chartElement.index].toLowerCase().replace(' ', '-');
+                    displayRepos(topic);
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
     });
 }
 

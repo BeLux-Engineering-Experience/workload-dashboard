@@ -34,6 +34,7 @@
     <title>BeLux InnerSource Clinic Repositories</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
     <div class="header">
@@ -50,9 +51,11 @@
             <option value="app-innovation">App Innovation</option>
         </select>
     </div>
-    <div id="repos"></div>
-    <div class="chart-container">
-        <canvas id="topicChart"></canvas>
+    <div class="content">
+        <div id="repos"></div>
+        <div class="chart-container">
+            <canvas id="topicChart"></canvas>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
