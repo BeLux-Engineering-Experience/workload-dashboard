@@ -13,18 +13,22 @@
 //     }
 // }
 
-// async function displayRepos() {
+// async function displayRepos(topic = 'all') {
 //     const topics = ['infra', 'data', 'ai', 'app-innovation'];
 //     const reposContainer = document.getElementById('repos');
+//     reposContainer.innerHTML = ''; // Clear previous content
+
 //     const loadingIndicator = document.createElement('div');
 //     loadingIndicator.className = 'loading';
 //     loadingIndicator.textContent = 'Loading repositories...';
 //     reposContainer.appendChild(loadingIndicator);
 
-//     for (const topic of topics) {
-//         const repos = await fetchRepos(topic);
+//     const filteredTopics = topic === 'all' ? topics : [topic];
+
+//     for (const filteredTopic of filteredTopics) {
+//         const repos = await fetchRepos(filteredTopic);
 //         const topicHeader = document.createElement('h2');
-//         topicHeader.textContent = `${topic} repositories:`;
+//         topicHeader.textContent = `${filteredTopic} repositories:`;
 //         reposContainer.appendChild(topicHeader);
 
 //         const repoList = document.createElement('ul');
@@ -47,6 +51,12 @@
 
 // document.addEventListener('DOMContentLoaded', () => {
 //     displayRepos();
+
+//     const topicSelect = document.getElementById('topic-select');
+//     topicSelect.addEventListener('change', (event) => {
+//         const selectedTopic = event.target.value;
+//         displayRepos(selectedTopic);
+//     });
 // });
 
 async function fetchRepos(topic) {
