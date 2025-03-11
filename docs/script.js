@@ -76,10 +76,10 @@ async function displayRepos(topic = 'all') {
 
     const filteredTopics = topic === 'all' ? topics : [topic];
 
-    for (const topic of filteredTopics) {
-        const repos = await fetchRepos(topic);
+    for (const filteredTopic of filteredTopics) {
+        const repos = await fetchRepos(filteredTopic);
         const topicHeader = document.createElement('h2');
-        topicHeader.textContent = `${topic} repositories:`;
+        topicHeader.textContent = `${filteredTopic} repositories:`;
         reposContainer.appendChild(topicHeader);
 
         const repoList = document.createElement('ul');
