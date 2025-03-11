@@ -91,7 +91,7 @@ a:hover {
 }
  */
 
-body {
+ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -134,6 +134,7 @@ h2 {
 .content {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 #repos {
