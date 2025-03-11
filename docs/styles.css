@@ -70,3 +70,8 @@ a:hover {
     font-size: 1.2em;
     color: #777;
 }
+
+.chart-container {
+    max-width: 400px;
+    margin: 20px auto;
+}
