@@ -1,12 +1,25 @@
 async function fetchRepos(topic) {
-    const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:BeLux Open-Source Clinic`);
-    const data = await response.json();
-    return data.items;
+    try {
+        const response = await fetch(`https://api.github.com/search/repositories?q=topic:${topic}+org:BeLux-Open-Source-Clinic`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch repositories for topic: ${topic}`);
+        }
+        const data = await response.json();
+        console.log(`Fetched data for topic ${topic}:`, data); // Debugging statement
+        return data.items;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
 async function displayRepos() {
     const topics = ['infra', 'data', 'ai', 'app-innovation'];
     const reposContainer = document.getElementById('repos');
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.className = 'loading';
+    loadingIndicator.textContent = 'Loading repositories...';
+    reposContainer.appendChild(loadingIndicator);
 
     for (const topic of topics) {
         const repos = await fetchRepos(topic);
@@ -14,14 +27,30 @@ async function displayRepos() {
         topicHeader.textContent = `Repositories for topic: ${topic}`;
         reposContainer.appendChild(topicHeader);
 
+        const topicLink = document.createElement('a');
+        topicLink.href = `https://github.com/search?q=topic:${topic}+org:BeLux-Open-Source-Clinic`;
+        topicLink.textContent = `View more ${topic} repositories on GitHub`;
+        topicLink.target = '_blank';
+        reposContainer.appendChild(topicLink);
+
         const repoList = document.createElement('ul');
-        repos.forEach(repo => {
-            const repoItem = document.createElement('li');
-            repoItem.innerHTML = `<a href="${repo.html_url}">${repo.name}</a>`;
-            repoList.appendChild(repoItem);
-        });
+        if (repos.length === 0) {
+            const noReposItem = document.createElement('li');
+            noReposItem.textContent = 'No repositories found.';
+            repoList.appendChild(noReposItem);
+        } else {
+            repos.forEach(repo => {
+                const repoItem = document.createElement('li');
+                repoItem.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>`;
+                repoList.appendChild(repoItem);
+            });
+        }
         reposContainer.appendChild(repoList);
     }
+
+    reposContainer.removeChild(loadingIndicator);
 }
 
-displayRepos();
+document.addEventListener('DOMContentLoaded', () => {
+    displayRepos();
+});
