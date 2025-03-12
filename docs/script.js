@@ -90,14 +90,19 @@
 // }
 
 // async function displayRepos(topic = 'all') {
-//     const topics = ['infra', 'data', 'ai', 'app-innovation'];
+//     const topics = {
+//         'infra': 'Infrastructure',
+//         'data': 'Data',
+//         'ai': 'AI',
+//         'app-innovation': 'App-Innovation'
+//     };
 //     const reposContainer = document.getElementById('repos');
 //     const loadingSpinner = document.getElementById('loading-spinner');
-//     reposContainer.innerHTML = ''; // Clear previous content
+//     reposContainer.innerHTML = '<h2 class="overview-title">Overview</h2>'; // Clear previous content and add title
 
 //     loadingSpinner.style.display = 'block'; // Show loading spinner
 
-//     const filteredTopics = topic === 'all' ? topics : [topic];
+//     const filteredTopics = topic === 'all' ? Object.keys(topics) : [topic];
 //     const topicCounts = { 'infra': 0, 'data': 0, 'ai': 0, 'app-innovation': 0 };
 
 //     for (const filteredTopic of filteredTopics) {
@@ -105,7 +110,7 @@
 //             const repos = await fetchRepos(filteredTopic);
 //             topicCounts[filteredTopic] += repos.length;
 //             const topicHeader = document.createElement('h2');
-//             topicHeader.textContent = `${filteredTopic} repositories:`;
+//             topicHeader.textContent = `${topics[filteredTopic]} repositories:`;
 //             reposContainer.appendChild(topicHeader);
 
 //             const repoList = document.createElement('ul');
@@ -130,7 +135,7 @@
 //         } catch (error) {
 //             console.error(`Failed to fetch repositories for topic: ${filteredTopic}`, error);
 //             const errorItem = document.createElement('li');
-//             errorItem.textContent = `Failed to fetch repositories for topic: ${filteredTopic}`;
+//             errorItem.textContent = `Failed to fetch repositories for topic: ${topics[filteredTopic]}`;
 //             reposContainer.appendChild(errorItem);
 //         }
 //     }
@@ -145,7 +150,7 @@
 //     const chart = new Chart(ctx, {
 //         type: 'pie',
 //         data: {
-//             labels: ['Infra', 'Data', 'AI', 'App Innovation'],
+//             labels: ['Infrastructure', 'Data', 'AI', 'App-Innovation'],
 //             datasets: [{
 //                 data: [topicCounts['infra'], topicCounts['data'], topicCounts['ai'], topicCounts['app-innovation']],
 //                 backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
@@ -345,28 +350,32 @@ async function displayRepos(topic = 'all') {
             topicHeader.textContent = `${topics[filteredTopic]} repositories:`;
             reposContainer.appendChild(topicHeader);
 
-            const repoList = document.createElement('ul');
+            const repoList = document.createElement('div');
+            repoList.className = 'repo-list';
             if (repos.length === 0) {
-                const noReposItem = document.createElement('li');
+                const noReposItem = document.createElement('div');
+                noReposItem.className = 'repo-card';
                 noReposItem.textContent = 'No repositories found.';
                 repoList.appendChild(noReposItem);
             } else {
                 for (const repo of repos) {
-                    const repoItem = document.createElement('li');
+                    const repoCard = document.createElement('div');
+                    repoCard.className = 'repo-card';
                     const contributors = await fetchContributors(repo.full_name);
                     const contributorNames = contributors.map(contributor => contributor.login).join(', ');
 
-                    repoItem.innerHTML = `
-                        <a href="${repo.html_url}" target="_blank" title="View repository on GitHub">${repo.name}</a>
-                        <span> - Contributors: ${contributorNames}</span>
+                    repoCard.innerHTML = `
+                        <h3><a href="${repo.html_url}" target="_blank" title="View repository on GitHub">${repo.name}</a></h3>
+                        <span>Contributors: ${contributorNames}</span>
                     `;
-                    repoList.appendChild(repoItem);
+                    repoList.appendChild(repoCard);
                 }
             }
             reposContainer.appendChild(repoList);
         } catch (error) {
             console.error(`Failed to fetch repositories for topic: ${filteredTopic}`, error);
-            const errorItem = document.createElement('li');
+            const errorItem = document.createElement('div');
+            errorItem.className = 'repo-card';
             errorItem.textContent = `Failed to fetch repositories for topic: ${topics[filteredTopic]}`;
             reposContainer.appendChild(errorItem);
         }
