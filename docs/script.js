@@ -316,11 +316,7 @@ async function displayRepos(topic = 'all') {
                         <div class="repo-item">
                             <div class="repo-details">
                                 <a href="${repo.html_url}" target="_blank" title="View repository on GitHub">${repo.name}</a>
-                                <p class="repo-description">${repo.description || 'No description available'}</p>
-                            </div>
-                            <div class="repo-contributors">
-                                <span>Contributors:</span>
-                                <span class="contributors">${contributorNames}</span>
+                                <p class="contributors">Contributors: ${contributorNames}</p>
                             </div>
                         </div>
                     `;

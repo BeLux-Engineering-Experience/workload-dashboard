@@ -320,22 +320,10 @@ h2 {
     text-decoration: underline;
 }
 
-.repo-description {
-    margin: 5px 0 0;
+.repo-details .contributors {
+    font-size: 0.9em;
     color: #666;
-}
-
-.repo-contributors {
-    text-align: right;
-}
-
-.repo-contributors span {
-    display: block;
-}
-
-.repo-contributors .contributors {
-    font-weight: bold;
-    color: #333;
+    margin-top: 5px;
 }
 
 .chart-container {
