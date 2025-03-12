@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: 'Roboto', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -79,6 +79,213 @@ h2 {
     max-width: 480px; 
     flex: 0 0 480px; 
     margin-left: 20px;
+}
+
+#topicChart {
+    width: 100%;
+    height: auto;
+}
+
+#overviewChart {
+    height: 500px; 
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #777;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+    display: none; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #repos {
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .chart-container {
+        max-width: 100%;
+        flex: 0 0 100%;
+        margin-left: 0;
+    }
+} */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#logo {
+    width: 50px; 
+    height: auto;
+    margin-right: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #2756cb;
+    margin: 0;
+}
+
+.filter {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#topic-select {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+}
+
+#topic-select:hover {
+    border-color: #2756cb;
+}
+
+h2 {
+    color: #0a0a0a;
+}
+
+.overview-title {
+    text-align: center;
+    font-size: 1.5em;
+    color: #2756cb;
+    margin-bottom: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+#repos {
+    max-width: 600px; 
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    flex: 1;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd; /* Added border */
+    transition: box-shadow 0.3s; /* Added transition for hover effect */
+}
+
+#repos:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Added hover effect */
+}
+
+.repo-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.repo-item:last-child {
+    border-bottom: none;
+}
+
+.repo-item:hover {
+    background-color: #f9f9f9;
+}
+
+.repo-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.repo-item .repo-info {
+    flex: 1;
+}
+
+.repo-item .repo-info h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #2756cb;
+}
+
+.repo-item .repo-info p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 480px; 
+    flex: 0 0 480px; 
+    margin-left: 20px;
+    padding: 20px; /* Added padding */
+    border: 1px solid #ddd; /* Added border */
+    border-radius: 10px; /* Added border radius */
+    background: #fff; /* Added background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow */
 }
 
 #topicChart {
