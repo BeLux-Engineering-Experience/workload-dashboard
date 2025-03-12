@@ -230,7 +230,6 @@
 //     });
 // });
 
-
 async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
     for (let i = 0; i < retries; i++) {
         try {
@@ -331,7 +330,7 @@ async function displayRepos(topic = 'all') {
     };
     const reposContainer = document.getElementById('repos');
     const loadingSpinner = document.getElementById('loading-spinner');
-    reposContainer.innerHTML = '<h2>Repository Inventory</h2>'; // Clear previous content and add title
+    reposContainer.innerHTML = '<h2 class="overview-title">Overview</h2>'; // Clear previous content and add title
 
     loadingSpinner.style.display = 'block'; // Show loading spinner
 
