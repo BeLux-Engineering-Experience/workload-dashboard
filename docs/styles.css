@@ -200,6 +200,10 @@ h2 {
     margin-left: 20px;
 }
 
+#overviewChart {
+    height: 400px; /* Increase the height of the overview chart */
+}
+
 canvas {
     max-width: 100%;
     height: auto;
