@@ -32,6 +32,8 @@ h1 {
 #topic-select {
     padding: 5px;
     font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 h2 {
@@ -41,23 +43,26 @@ h2 {
 .content {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 #repos {
-    max-width: 800px;
+    max-width: 600px; 
     background: #97a2b2;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
     flex: 1;
+    margin-right: 20px;
 }
 
 .chart-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 700px;
-    margin-left: 0px;
+    width: 100%;
+    max-width: 400px;
     flex: 0 0 400px;
 }
 
@@ -78,16 +83,52 @@ li {
 a {
     text-decoration: none;
     color: #007bff;
+    transition: color 0.3s;
 }
 
 a:hover {
     text-decoration: underline;
+    color: #0056b3;
 }
 
 .loading {
     text-align: center;
     font-size: 1.2em;
     color: #777;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+    display: none; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #repos {
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .chart-container {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
 } */
 
 body {
@@ -140,7 +181,7 @@ h2 {
 }
 
 #repos {
-    max-width: 600px; /* Adjust this value to make more space for the chart */
+    max-width: 600px; /* Adjust this value to make more space for the charts */
     background: #97a2b2;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -156,6 +197,7 @@ h2 {
     width: 100%;
     max-width: 400px;
     flex: 0 0 400px;
+    margin-left: 20px;
 }
 
 canvas {
@@ -220,5 +262,6 @@ a:hover {
     .chart-container {
         max-width: 100%;
         flex: 0 0 100%;
+        margin-left: 0;
     }
 }

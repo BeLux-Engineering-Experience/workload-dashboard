@@ -30,12 +30,10 @@
 // async function displayRepos(topic = 'all') {
 //     const topics = ['infra', 'data', 'ai', 'app-innovation'];
 //     const reposContainer = document.getElementById('repos');
+//     const loadingSpinner = document.getElementById('loading-spinner');
 //     reposContainer.innerHTML = ''; // Clear previous content
 
-//     const loadingIndicator = document.createElement('div');
-//     loadingIndicator.className = 'loading';
-//     loadingIndicator.textContent = 'Loading repositories...';
-//     reposContainer.appendChild(loadingIndicator);
+//     loadingSpinner.style.display = 'block'; // Show loading spinner
 
 //     const filteredTopics = topic === 'all' ? topics : [topic];
 //     const topicCounts = { 'infra': 0, 'data': 0, 'ai': 0, 'app-innovation': 0 };
@@ -59,7 +57,7 @@
 //                 const contributorNames = contributors.map(contributor => contributor.login).join(', ');
 
 //                 repoItem.innerHTML = `
-//                     <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+//                     <a href="${repo.html_url}" target="_blank" title="View repository on GitHub">${repo.name}</a>
 //                     <span> - Contributors: ${contributorNames}</span>
 //                 `;
 //                 repoList.appendChild(repoItem);
@@ -68,7 +66,7 @@
 //         reposContainer.appendChild(repoList);
 //     }
 
-//     reposContainer.removeChild(loadingIndicator);
+//     loadingSpinner.style.display = 'none'; // Hide loading spinner
 //     updateChart(topicCounts);
 // }
 
@@ -151,6 +149,28 @@ async function fetchContributors(repoFullName) {
     }
 }
 
+async function fetchOverviewData() {
+    try {
+        const response = await fetch(`https://api.github.com/orgs/belux-open-source-clinic`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch overview data for the organization`);
+        }
+        const data = await response.json();
+        return {
+            commits: data.public_repos, // Replace with actual data if available
+            pullRequests: data.public_gists, // Replace with actual data if available
+            issues: data.followers // Replace with actual data if available
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            commits: 0,
+            pullRequests: 0,
+            issues: 0
+        };
+    }
+}
+
 async function displayRepos(topic = 'all') {
     const topics = ['infra', 'data', 'ai', 'app-innovation'];
     const reposContainer = document.getElementById('repos');
@@ -192,6 +212,7 @@ async function displayRepos(topic = 'all') {
 
     loadingSpinner.style.display = 'none'; // Hide loading spinner
     updateChart(topicCounts);
+    updateOverviewChart();
 }
 
 function updateChart(topicCounts) {
@@ -231,6 +252,31 @@ function updateChart(topicCounts) {
             }
         },
         plugins: [ChartDataLabels]
+    });
+}
+
+async function updateOverviewChart() {
+    const overviewData = await fetchOverviewData();
+    const ctx = document.getElementById('overviewChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Commits', 'Pull Requests', 'Issues'],
+            datasets: [{
+                label: 'Overview',
+                data: [overviewData.commits, overviewData.pullRequests, overviewData.issues],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
     });
 }
 
