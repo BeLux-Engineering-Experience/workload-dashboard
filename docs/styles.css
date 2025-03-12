@@ -115,6 +115,11 @@ h2 {
     color: #666;
 }
 
+.repo-item .repo-info .contributors {
+    font-weight: bold;
+    color: #333;
+}
+
 .chart-container {
     display: flex;
     justify-content: center;
@@ -286,6 +291,7 @@ h2 {
 
 .repo-item {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #eee;
@@ -300,29 +306,34 @@ h2 {
     background-color: #f9f9f9;
 }
 
-.repo-item img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.repo-item .repo-info {
+.repo-details {
     flex: 1;
 }
 
-.repo-item .repo-info h3 {
-    margin: 0;
+.repo-details a {
     font-size: 1.2em;
     color: #2756cb;
+    text-decoration: none;
 }
 
-.repo-item .repo-info p {
+.repo-details a:hover {
+    text-decoration: underline;
+}
+
+.repo-description {
     margin: 5px 0 0;
     color: #666;
 }
 
-.repo-item .repo-info .contributors {
+.repo-contributors {
+    text-align: right;
+}
+
+.repo-contributors span {
+    display: block;
+}
+
+.repo-contributors .contributors {
     font-weight: bold;
     color: #333;
 }
