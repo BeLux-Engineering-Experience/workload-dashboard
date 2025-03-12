@@ -3,6 +3,10 @@
 ## Description
 This project provides a web-based dashboard for visualizing and interacting with repositories from the BeLux InnerSource Clinic organization on GitHub. The dashboard offers an overview of the repositories, contributors, and overall work done in the organization.
 
+**Example of the dashboard:**
+
+![demo](./docs/logo/demo.png)
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
