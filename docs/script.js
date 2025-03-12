@@ -151,22 +151,52 @@ async function fetchContributors(repoFullName) {
 
 async function fetchOverviewData() {
     try {
-        const response = await fetch(`https://api.github.com/orgs/belux-open-source-clinic`);
+        const response = await fetch(`https://api.github.com/orgs/belux-open-source-clinic/events`);
         if (!response.ok) {
             throw new Error(`Failed to fetch overview data for the organization`);
         }
         const data = await response.json();
-        return {
-            commits: data.public_repos, // Replace with actual data if available
-            pullRequests: data.public_gists, // Replace with actual data if available
-            issues: data.followers // Replace with actual data if available
+
+        // Process data to get counts for the last 7 days
+        const today = new Date();
+        const last7Days = Array.from({ length: 7 }, (_, i) => {
+            const date = new Date(today);
+            date.setDate(today.getDate() - i);
+            return date.toISOString().split('T')[0];
+        }).reverse();
+
+        const overviewData = {
+            commits: Array(7).fill(0),
+            pullRequests: Array(7).fill(0),
+            issues: Array(7).fill(0)
         };
+
+        data.forEach(event => {
+            const eventDate = event.created_at.split('T')[0];
+            const dayIndex = last7Days.indexOf(eventDate);
+            if (dayIndex !== -1) {
+                if (event.type === 'PushEvent') {
+                    overviewData.commits[dayIndex] += event.payload.commits.length;
+                } else if (event.type === 'PullRequestEvent') {
+                    overviewData.pullRequests[dayIndex] += 1;
+                } else if (event.type === 'IssuesEvent') {
+                    overviewData.issues[dayIndex] += 1;
+                }
+            }
+        });
+
+        return { last7Days, ...overviewData };
     } catch (error) {
         console.error(error);
         return {
-            commits: 0,
-            pullRequests: 0,
-            issues: 0
+            last7Days: Array.from({ length: 7 }, (_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                return date.toISOString().split('T')[0];
+            }).reverse(),
+            commits: Array(7).fill(0),
+            pullRequests: Array(7).fill(0),
+            issues: Array(7).fill(0)
         };
     }
 }
@@ -257,16 +287,31 @@ function updateChart(topicCounts) {
 
 async function updateOverviewChart() {
     const overviewData = await fetchOverviewData();
-    const ctx = document.getElementById('overviewChart').getContext('7d');
+    const ctx = document.getElementById('overviewChart').getContext('2d');
     new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['Commits', 'Pull Requests', 'Issues'],
-            datasets: [{
-                label: 'Overview',
-                data: [overviewData.commits, overviewData.pullRequests, overviewData.issues],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-            }]
+            labels: overviewData.last7Days,
+            datasets: [
+                {
+                    label: 'Commits',
+                    data: overviewData.commits,
+                    borderColor: '#FF6384',
+                    fill: false
+                },
+                {
+                    label: 'Pull Requests',
+                    data: overviewData.pullRequests,
+                    borderColor: '#36A2EB',
+                    fill: false
+                },
+                {
+                    label: 'Issues',
+                    data: overviewData.issues,
+                    borderColor: '#FFCE56',
+                    fill: false
+                }
+            ]
         },
         options: {
             responsive: true,
