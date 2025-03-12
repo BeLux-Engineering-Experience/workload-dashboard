@@ -200,6 +200,11 @@ h2 {
     margin-left: 20px;
 }
 
+#topicChart {
+    width: 100%;
+    height: auto;
+}
+
 #overviewChart {
     height: 400px; /* Increase the height of the overview chart */
 }
