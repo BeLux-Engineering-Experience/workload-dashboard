@@ -69,6 +69,50 @@ h2 {
     flex: 1;
     margin-right: 20px;
     border-radius: 10px;
+    border: 1px solid #ddd; 
+    transition: box-shadow 0.3s; 
+}
+
+#repos:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
+}
+
+.repo-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.repo-item:last-child {
+    border-bottom: none;
+}
+
+.repo-item:hover {
+    background-color: #f9f9f9;
+}
+
+.repo-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.repo-item .repo-info {
+    flex: 1;
+}
+
+.repo-item .repo-info h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #2756cb;
+}
+
+.repo-item .repo-info p {
+    margin: 5px 0 0;
+    color: #666;
 }
 
 .chart-container {
@@ -79,6 +123,11 @@ h2 {
     max-width: 480px; 
     flex: 0 0 480px; 
     margin-left: 20px;
+    padding: 20px; 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    background: #fff; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
 #topicChart {
@@ -271,6 +320,11 @@ h2 {
 .repo-item .repo-info p {
     margin: 5px 0 0;
     color: #666;
+}
+
+.repo-item .repo-info .contributors {
+    font-weight: bold;
+    color: #333;
 }
 
 .chart-container {
