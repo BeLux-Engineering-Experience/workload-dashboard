@@ -38,9 +38,11 @@
 //     reposContainer.appendChild(loadingIndicator);
 
 //     const filteredTopics = topic === 'all' ? topics : [topic];
+//     const topicCounts = { 'infra': 0, 'data': 0, 'ai': 0, 'app-innovation': 0 };
 
 //     for (const filteredTopic of filteredTopics) {
 //         const repos = await fetchRepos(filteredTopic);
+//         topicCounts[filteredTopic] += repos.length;
 //         const topicHeader = document.createElement('h2');
 //         topicHeader.textContent = `${filteredTopic} repositories:`;
 //         reposContainer.appendChild(topicHeader);
@@ -67,6 +69,47 @@
 //     }
 
 //     reposContainer.removeChild(loadingIndicator);
+//     updateChart(topicCounts);
+// }
+
+// function updateChart(topicCounts) {
+//     const ctx = document.getElementById('topicChart').getContext('2d');
+//     const chart = new Chart(ctx, {
+//         type: 'pie',
+//         data: {
+//             labels: ['Infra', 'Data', 'AI', 'App Innovation'],
+//             datasets: [{
+//                 data: [topicCounts['infra'], topicCounts['data'], topicCounts['ai'], topicCounts['app-innovation']],
+//                 backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             maintainAspectRatio: false,
+//             plugins: {
+//                 datalabels: {
+//                     formatter: (value, ctx) => {
+//                         let sum = 0;
+//                         let dataArr = ctx.chart.data.datasets[0].data;
+//                         dataArr.map(data => {
+//                             sum += data;
+//                         });
+//                         let percentage = (value * 100 / sum).toFixed(2) + "%";
+//                         return percentage;
+//                     },
+//                     color: '#fff',
+//                 }
+//             },
+//             onClick: (event, elements) => {
+//                 if (elements.length > 0) {
+//                     const chartElement = elements[0];
+//                     const topic = chart.data.labels[chartElement.index].toLowerCase().replace(' ', '-');
+//                     displayRepos(topic);
+//                 }
+//             }
+//         },
+//         plugins: [ChartDataLabels]
+//     });
 // }
 
 // document.addEventListener('DOMContentLoaded', () => {
@@ -111,12 +154,10 @@ async function fetchContributors(repoFullName) {
 async function displayRepos(topic = 'all') {
     const topics = ['infra', 'data', 'ai', 'app-innovation'];
     const reposContainer = document.getElementById('repos');
+    const loadingSpinner = document.getElementById('loading-spinner');
     reposContainer.innerHTML = ''; // Clear previous content
 
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.className = 'loading';
-    loadingIndicator.textContent = 'Loading repositories...';
-    reposContainer.appendChild(loadingIndicator);
+    loadingSpinner.style.display = 'block'; // Show loading spinner
 
     const filteredTopics = topic === 'all' ? topics : [topic];
     const topicCounts = { 'infra': 0, 'data': 0, 'ai': 0, 'app-innovation': 0 };
@@ -140,7 +181,7 @@ async function displayRepos(topic = 'all') {
                 const contributorNames = contributors.map(contributor => contributor.login).join(', ');
 
                 repoItem.innerHTML = `
-                    <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                    <a href="${repo.html_url}" target="_blank" title="View repository on GitHub">${repo.name}</a>
                     <span> - Contributors: ${contributorNames}</span>
                 `;
                 repoList.appendChild(repoItem);
@@ -149,7 +190,7 @@ async function displayRepos(topic = 'all') {
         reposContainer.appendChild(repoList);
     }
 
-    reposContainer.removeChild(loadingIndicator);
+    loadingSpinner.style.display = 'none'; // Hide loading spinner
     updateChart(topicCounts);
 }
 
