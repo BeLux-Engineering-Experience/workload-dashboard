@@ -257,7 +257,7 @@ function updateChart(topicCounts) {
 
 async function updateOverviewChart() {
     const overviewData = await fetchOverviewData();
-    const ctx = document.getElementById('overviewChart').getContext('2d');
+    const ctx = document.getElementById('overviewChart').getContext('7d');
     new Chart(ctx, {
         type: 'bar',
         data: {
