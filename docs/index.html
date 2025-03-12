@@ -1,4 +1,4 @@
- <!-- <!DOCTYPE html>
+ <!DOCTYPE html>
  <html lang="en">
  <head>
      <meta charset="UTF-8">
@@ -38,55 +38,3 @@
      <script src="script.js"></script>
  </body>
  </html>
-
-  -->
-
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeLux InnerSource Clinic Repositories</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="navbar-brand">
-            <img id="logo" src="logo/mslogo.png" alt="Logo">
-            <span>BeLux InnerSource Clinic</span>
-        </div>
-        <ul class="navbar-nav">
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#repositories">Repositories</a></li>
-        </ul>
-    </nav>
-    <div class="header">
-        <h1>BeLux InnerSource Clinic Repositories</h1>
-    </div>
-    <div class="filter">
-        <label for="topic-select">Filter by topic:</label>
-        <select id="topic-select">
-            <option value="all">All</option>
-            <option value="infra">Infrastructure</option>
-            <option value="data">Data</option>
-            <option value="ai">AI</option>
-            <option value="app-innovation">App-Innovation</option>
-        </select>
-    </div>
-    <div class="content">
-        <div id="repos">
-            <h2 class="overview-title">Overview</h2>
-        </div>
-        <div class="chart-container">
-            <canvas id="topicChart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="overviewChart"></canvas>
-        </div>
-    </div>
-    <div class="loading-spinner" id="loading-spinner"></div>
-    <script src="script.js"></script>
-</body>
-</html>
