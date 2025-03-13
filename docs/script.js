@@ -304,6 +304,7 @@ async function displayRepos(topic = 'all') {
             const repoList = document.createElement('ul');
             if (repos.length === 0) {
                 const noReposItem = document.createElement('li');
+                noReposItem.classList.add('no-repos'); // Add class for styling
                 noReposItem.textContent = 'No repositories found.';
                 repoList.appendChild(noReposItem);
             } else {

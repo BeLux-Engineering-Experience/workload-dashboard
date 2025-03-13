@@ -323,6 +323,11 @@ h2 {
     margin-top: 2px; /* Reduced margin */
 }
 
+.no-repos {
+    padding: 5px 10px; /* Same padding as repo-item */
+    color: #666;
+}
+
 .chart-container {
     display: flex;
     justify-content: center;
