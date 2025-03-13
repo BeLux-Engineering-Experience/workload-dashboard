@@ -277,6 +277,55 @@ async function fetchContributors(repoFullName) {
     }
 }
 
+async function fetchOverviewData() {
+    try {
+        const url = `https://api.github.com/orgs/belux-open-source-clinic/events`;
+        const data = await fetchWithRetry(url);
+
+        // Process data to get counts for the last 7 days
+        const today = new Date();
+        const last7Days = Array.from({ length: 7 }, (_, i) => {
+            const date = new Date(today);
+            date.setDate(today.getDate() - i);
+            return date.toISOString().split('T')[0];
+        }).reverse();
+
+        const overviewData = {
+            commits: Array(7).fill(0),
+            pullRequests: Array(7).fill(0),
+            issues: Array(7).fill(0)
+        };
+
+        data.forEach(event => {
+            const eventDate = event.created_at.split('T')[0];
+            const dayIndex = last7Days.indexOf(eventDate);
+            if (dayIndex !== -1) {
+                if (event.type === 'PushEvent') {
+                    overviewData.commits[dayIndex] += event.payload.commits.length;
+                } else if (event.type === 'PullRequestEvent') {
+                    overviewData.pullRequests[dayIndex] += 1;
+                } else if (event.type === 'IssuesEvent') {
+                    overviewData.issues[dayIndex] += 1;
+                }
+            }
+        });
+
+        return { last7Days, ...overviewData };
+    } catch (error) {
+        console.error(error);
+        return {
+            last7Days: Array.from({ length: 7 }, (_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                return date.toISOString().split('T')[0];
+            }).reverse(),
+            commits: Array(7).fill(0),
+            pullRequests: Array(7).fill(0),
+            issues: Array(7).fill(0)
+        };
+    }
+}
+
 async function displayRepos(topic = 'all') {
     const topics = {
         'infra': 'Infrastructure',
@@ -334,6 +383,86 @@ async function displayRepos(topic = 'all') {
     loadingSpinner.style.display = 'none'; // Hide loading spinner
     updateChart(topicCounts);
     updateOverviewChart();
+}
+
+function updateChart(topicCounts) {
+    const ctx = document.getElementById('topicChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Infrastructure', 'Data', 'AI', 'App-Innovation'],
+            datasets: [{
+                data: [topicCounts['infra'], topicCounts['data'], topicCounts['ai'], topicCounts['app-innovation']],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                datalabels: {
+                    formatter: (value, ctx) => {
+                        let sum = 0;
+                        let dataArr = ctx.chart.data.datasets[0].data;
+                        dataArr.map(data => {
+                            sum += data;
+                        });
+                        let percentage = (value * 100 / sum).toFixed(2) + "%";
+                        return percentage;
+                    },
+                    color: '#fff',
+                }
+            },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const chartElement = elements[0];
+                    const topic = chart.data.labels[chartElement.index].toLowerCase().replace(' ', '-');
+                    displayRepos(topic);
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+}
+
+async function updateOverviewChart() {
+    const overviewData = await fetchOverviewData();
+    const ctx = document.getElementById('overviewChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: overviewData.last7Days,
+            datasets: [
+                {
+                    label: 'Commits',
+                    data: overviewData.commits,
+                    borderColor: '#FF6384',
+                    fill: false
+                },
+                {
+                    label: 'Pull Requests',
+                    data: overviewData.pullRequests,
+                    borderColor: '#36A2EB',
+                    fill: false
+                },
+                {
+                    label: 'Issues',
+                    data: overviewData.issues,
+                    borderColor: '#FFCE56',
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
