@@ -257,6 +257,7 @@ h1 {
 
 h2 {
     color: #0a0a0a;
+    margin: 10px 0; /* Reduced margin */
 }
 
 .overview-title {
@@ -293,7 +294,7 @@ h2 {
 .repo-item {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 5px 10px; /* Reduced padding */
     border-bottom: 1px solid #eee;
     transition: background-color 0.3s;
 }
@@ -319,7 +320,7 @@ h2 {
 .repo-item .contributors {
     font-size: 0.9em;
     color: #666;
-    margin-top: 5px;
+    margin-top: 2px; /* Reduced margin */
 }
 
 .chart-container {
@@ -354,10 +355,11 @@ canvas {
 ul {
     list-style-type: none;
     padding: 0;
+    margin: 0; /* Removed margin */
 }
 
 li {
-    margin: 10px 0;
+    margin: 5px 0; /* Reduced margin */
 }
 
 a {
