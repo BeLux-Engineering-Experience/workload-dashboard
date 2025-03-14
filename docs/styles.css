@@ -356,7 +356,7 @@ h2 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow */
 }
 
-#topicChart, #overviewChart, #anotherChart { /* Assuming you have another chart with id 'anotherChart' */
+#topicChart, #overviewChart { /* Removed #anotherChart */
     width: 100%;
     height: auto;
     max-width: 480px; /* Ensure all charts have the same max-width */
