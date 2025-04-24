@@ -7,7 +7,7 @@ This project provides a web-based dashboard for visualizing and interacting with
 
 ![demo](./docs/logo/demo.png)
 
-You can access the website [here](https://belux-open-source-clinic.github.io/workload-dashboard/).
+You can access the website [here](https://belux-engineering-experience.github.io/workload-dashboard/).
 
 ## Table of Contents
 - [Installation](#installation)
