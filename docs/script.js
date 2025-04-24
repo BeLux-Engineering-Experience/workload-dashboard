@@ -19,7 +19,7 @@ async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
 
 async function fetchRepos(topic) {
     try {
-        const url = `https://api.github.com/search/repositories?q=topic:${topic}+org:belux-open-source-clinic`;
+        const url = `https://api.github.com/search/repositories?q=topic:${topic}+org:belux-engineering-experience`;
         const data = await fetchWithRetry(url);
         console.log(`Fetched data for topic ${topic}:`, data); // Debugging statement
         return data.items;
@@ -42,7 +42,7 @@ async function fetchContributors(repoFullName) {
 
 async function fetchOverviewData() {
     try {
-        const url = `https://api.github.com/orgs/belux-open-source-clinic/events`;
+        const url = `https://api.github.com/orgs/belux-engineering-experience/events`;
         const data = await fetchWithRetry(url);
 
         // Process data to get counts for the last 7 days
@@ -255,7 +255,7 @@ async function searchRepos(searchTerm) {
     loadingSpinner.style.display = 'block'; // Show loading spinner
 
     try {
-        const url = `https://api.github.com/search/repositories?q=${searchTerm}+org:belux-open-source-clinic`;
+        const url = `https://api.github.com/search/repositories?q=${searchTerm}+org:belux-engineering-experience`;
         const data = await fetchWithRetry(url);
         const repos = data.items;
 
